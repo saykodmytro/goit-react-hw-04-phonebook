@@ -1,56 +1,56 @@
 import { nanoid } from 'nanoid';
-import { Component } from 'react';
+import { useState } from 'react';
 import css from './PhoneForm.module.css';
 
-export default class PhoneForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+const PhoneForm = ({ handleAddContact }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-    const newContact = { ...this.state, id: nanoid(5) };
-    this.props.handleAddContact(newContact);
-    this.setState({
-      name: 'Test',
-      number: '1111',
-    });
+    const newContact = { name, number, id: nanoid(5) };
+    handleAddContact(newContact);
+    setName('');
+    setNumber('');
   };
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  const handleChange = e => {
+    if (e.target.name === 'name') {
+      setName(e.target.value);
+    } else if (e.target.name === 'number') {
+      setNumber(e.target.value);
+    }
   };
 
-  render() {
-    return (
-      <form action="" className={css.form} onSubmit={this.handleSubmit}>
-        <label htmlFor="" className={css.lable}>
-          <p className={css.titleLable}>Name</p>
+  return (
+    <form action="" className={css.form} onSubmit={handleSubmit}>
+      <label htmlFor="" className={css.lable}>
+        <p className={css.titleLable}>Name</p>
 
-          <input
-            onChange={this.handleChange}
-            name="name"
-            type="text"
-            className={css.input}
-            value={this.state.name}
-            required
-          />
-        </label>
-        <p className={css.titleLable}>Number</p>
-        <label htmlFor="" className={css.lable}>
-          <input
-            onChange={this.handleChange}
-            name="number"
-            type="text"
-            className={css.input}
-            value={this.state.number}
-          />
-        </label>
-        <button type="submit" className={css.btnForm}>
-          Add contact
-        </button>
-      </form>
-    );
-  }
-}
+        <input
+          onChange={handleChange}
+          name="name"
+          type="text"
+          className={css.input}
+          value={name}
+          required
+        />
+      </label>
+      <p className={css.titleLable}>Number</p>
+      <label htmlFor="" className={css.lable}>
+        <input
+          onChange={handleChange}
+          name="number"
+          type="text"
+          className={css.input}
+          value={number}
+        />
+      </label>
+      <button type="submit" className={css.btnForm}>
+        Add contact
+      </button>
+    </form>
+  );
+};
+
+export default PhoneForm;
