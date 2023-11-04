@@ -41,6 +41,7 @@ export const App = () => {
   };
 
   const handlerFilter = () => {
+    console.log('handlerFilter handlerFilter handlerFilter');
     let searchContact = [];
     if (filter) {
       searchContact = contacts.filter(contact =>
